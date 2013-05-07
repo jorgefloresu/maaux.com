@@ -20,9 +20,9 @@ $tb_pref_counter = 1;
 
 $db_connections = array (
 	0 => array ('name' => 'Distribuidora María Auxiliadora',
-		'host' => 'localhost',
-		'dbuser' => 'jwwwadas_admin',
-		'dbpassword' => 'admin',
+		'host' => 'aa1iatina3bqz2r.cwcgpsllswqo.us-east-1.rds.amazonaws.com',
+		'dbuser' => 'admin',
+		'dbpassword' => '1zga95Wx',
 		'dbname' => 'jwwwadas_maaux',
 		'tbpref' => '0_')
 
