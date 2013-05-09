@@ -225,11 +225,21 @@ start_row();
 ref_cells(_("#:"), 'OrderNumber', '',null, '', true);
 if ($_POST['order_view_mode'] != 'DeliveryTemplates' && $_POST['order_view_mode'] != 'InvoiceTemplates')
 {
+    if ($_SESSION["wa_current_user"]->access == 11)
 	ref_cells(_("Ref"), 'OrderReference', '',null, '', true);
-  	date_cells(_("from:"), 'OrdersAfterDate', '', null, -30);
-  	date_cells(_("to:"), 'OrdersToDate', '', null, 1);
+    
+    date_cells(_("from:"), 'OrdersAfterDate', '', null, -30);
+    date_cells(_("to:"), 'OrdersToDate', '', null, 1);
 }
-locations_list_cells(_("Location:"), 'StockLocation', null, true);
+ 
+if ($_SESSION["wa_current_user"]->access == 11)
+{
+    locations_list_cells(_("Location:"), 'StockLocation', null, true);
+}
+else
+{
+    sales_persons_list_cells(_("Salesman:"), 'SelectSalesman', null, _("No Sales Folk Filter"));
+}
 
 stock_items_list_cells(_("Item:"), 'SelectStockFromList', null, true);
 
@@ -323,6 +333,9 @@ else	// ... or select inquiry constraints
 
 	if (isset($_POST['StockLocation']) && $_POST['StockLocation'] != ALL_TEXT)
 		$sql .= " AND sorder.from_stk_loc = ".db_escape($_POST['StockLocation']);
+        
+        if (isset($_POST['SelectSalesman']) && $_POST['SelectSalesman'] != -1)
+                $sql .= " AND branch.salesman = ".db_escape($_POST['SelectSalesman']);
 
 	if ($_POST['order_view_mode']=='OutstandingOnly')
 		$sql .= " AND line.qty_sent < line.quantity";
